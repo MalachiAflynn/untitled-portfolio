@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ableLion · Mini Drone</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  header.page{padding:54px 0 36px;border-bottom:1px solid var(--line)}
+  header.page h1{font-size:clamp(38px,7vw,68px)}
+  .lede{max-width:600px;margin-top:20px;color:var(--dim);font-size:16px;line-height:1.65}
+  .lede b{color:var(--ink);font-weight:500}
+  .status-line{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+    color:var(--warn);margin-top:22px;display:flex;align-items:center;gap:9px}
+  .status-line::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--warn);
+    box-shadow:0 0 10px var(--warn)}
+
+  .sec{padding:46px 0;border-bottom:1px solid var(--line)}
+  .sec h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:22px;font-weight:600}
+
+  .bom{width:100%;border-collapse:collapse;font-size:14px}
+  .bom td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .bom tr:last-child td{border-bottom:none}
+  .bom .role{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--dim);width:130px}
+  .bom .part{color:var(--ink);font-weight:500}
+  .bom .note{color:var(--dim);font-size:13px}
+
+  .issue{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-top:1px solid var(--line)}
+  .issue:first-of-type{border-top:none}
+  .issue .dot{width:9px;height:9px;border-radius:50%;background:var(--warn);
+    margin-top:6px;flex-shrink:0;box-shadow:0 0 9px var(--warn)}
+  .issue .body h3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin-bottom:5px}
+  .issue .body p{color:var(--dim);font-size:14px;line-height:1.6}
+  .issue .body p b{color:var(--ink);font-weight:500}
+  .fix{color:var(--signal);font-weight:500}
+
+  .lessons{padding:46px 0}
+  .lessons h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:22px;font-weight:600}
+  .law{border-left:2px solid var(--signal);padding:4px 0 4px 18px;margin-bottom:16px}
+  .law p{font-size:14.5px;color:var(--ink)}
+  .law p span{color:var(--dim)}
+
+  .next-link{display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--beam);
+    border:1px solid var(--line);padding:11px 18px;border-radius:7px;transition:.18s}
+  .next-link:hover{border-color:var(--beam)}
+
+  .shot{width:100%;border:1px solid var(--line);border-radius:10px;display:block;margin-top:6px}
+  .shot-cap{color:var(--dim);font-size:14px;line-height:1.6;margin:0 0 4px;max-width:600px}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="switch">
+    <a href="index.html" class="active">able<span>Lion</span></a>
+    <a href="ablebudget.html">able<span>Budget</span></a>
+    <a href="ablebody.html">able<span>Body</span></a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">HOME</a>
+    <a href="roadmap.html">ROADMAP</a>
+    <a href="mini-drone.html" class="active">MINI DRONE</a>
+    <a class="soon">LOG · SOON</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="page">
+    <div class="eyebrow w">Build 00 · the prototype</div>
+    <h1>Mini Drone</h1>
+    <p class="lede">An 85mm 3D-printed brushed quadcopter running flight code written from scratch on an ESP32. Built as a <b>CICS 256 group project</b>, so it is not a solo claim, but it is the bench that taught every lesson the rest of the line stands on.</p>
+    <div class="status-line">STATUS: GROUNDED · PROTOTYPE, BUILT &amp; BENCH-TESTED</div>
+  </header>
+
+  <section class="sec">
+    <h2>Ground station</h2>
+    <p class="shot-cap">The dashboard I built to fly it and watch it live: artificial horizon, per-motor output, throttle and heading gauges, all streamed over WiFi from the ESP32.</p>
+    <img class="shot" src="dashboard.png" alt="ableLion Mini Drone ground-station dashboard">
+  </section>
+
+  <section class="sec">
+    <h2>Build sheet</h2>
+    <table class="bom">
+      <tr><td class="role">Frame</td><td class="part">85mm 3D-printed quad</td><td class="note">Printed airframe, brushed layout</td></tr>
+      <tr><td class="role">Flight controller</td><td class="part">ESP32-WROOM-32</td><td class="note">Running fully custom flight code, no off-the-shelf firmware</td></tr>
+      <tr><td class="role">IMU</td><td class="part">MPU-6050</td><td class="note">6-axis gyro and accelerometer</td></tr>
+      <tr><td class="role">Motors</td><td class="part">4× AEDIKO 8520</td><td class="note">8.5 × 20mm brushed, up to ~10A peak combined</td></tr>
+      <tr><td class="role">Motor drive</td><td class="part">RLZ44N MOSFETs</td><td class="note">Standard-level, found to limit motor drive on a 3.3V gate</td></tr>
+      <tr><td class="role">Input</td><td class="part">PS5 controller</td><td class="note">Over Bluetooth</td></tr>
+      <tr><td class="role">Power</td><td class="part">1S LiPo</td><td class="note">~650mAh 1C, found to current-starve the motors</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2>Why it hasn't flown</h2>
+
+    <div class="issue"><div class="dot"></div>
+      <div class="body">
+        <h3>1 · MOSFET gate drive</h3>
+        <p>The RLZ44N are <b>standard-level</b> MOSFETs. A 3.3V GPIO from the ESP32 can't fully saturate the gate, which wants closer to 10V, so the motors never reached full drive.</p>
+      </div>
+    </div>
+
+    <div class="issue"><div class="dot"></div>
+      <div class="body">
+        <h3>2 · Current starvation</h3>
+        <p>The original ~650mAh 1C pack could deliver only about 0.65A, while the four 8520 motors pull up to <b>10A peak</b>. There was never enough current for lift.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lessons">
+    <h2>What it taught</h2>
+    <div class="law"><p>C-rating beats capacity on small high-draw builds. <span>A smaller high-C pack outflies a bigger low-C one when the motors are current-starved.</span></p></div>
+    <div class="law"><p>MOSFET logic level is non-negotiable. <span>A 3.3V GPIO won't open a standard-level part. ESP32-driven motors need logic-level silicon.</span></p></div>
+    <div class="law"><p>Verify the connector before you buy. <span>A custom soldered build doesn't always match a "standard" part.</span></p></div>
+    <br>
+    <a href="roadmap.html" class="next-link">Next in the line: ableLion V1 →</a>
+  </section>
+
+  <footer><p>ableLion · MINI DRONE → V1 → ∞</p></footer>
+
+</div>
+</body>
+</html>

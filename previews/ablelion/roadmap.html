@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ableLion · Roadmap</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  header.page{padding:54px 0 36px;border-bottom:1px solid var(--line)}
+  header.page h1{font-size:clamp(38px,7vw,64px)}
+  .mission{max-width:560px;margin-top:20px;color:var(--dim);font-size:16px}
+  .mission b{color:var(--ink);font-weight:500}
+  .vector{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);
+    margin-top:26px;display:flex;flex-wrap:wrap;gap:8px 22px}
+  .vector span{color:var(--beam)}
+
+  .phase{padding:46px 0;border-bottom:1px solid var(--line)}
+  .phase-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    letter-spacing:.1em;padding:3px 9px;border-radius:4px;white-space:nowrap}
+  .tag.now{background:rgba(59,130,246,.12);color:var(--signal);border:1px solid rgba(59,130,246,.3)}
+  .tag.next{background:rgba(29,78,216,.10);color:var(--beam);border:1px solid rgba(29,78,216,.28)}
+  .tag.horizon{background:rgba(100,116,139,.1);color:var(--dim);border:1px solid var(--line)}
+  .phase h2{font-family:'Space Grotesk',sans-serif;font-weight:600;
+    font-size:clamp(24px,4vw,34px);letter-spacing:-.02em}
+  .phase-sub{color:var(--dim);font-size:14px;margin:6px 0 26px;max-width:620px}
+
+  .issue{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
+  .issue:first-of-type{border-top:none}
+  .issue .dot{width:8px;height:8px;border-radius:50%;background:var(--warn);
+    margin-top:7px;flex-shrink:0;box-shadow:0 0 8px var(--warn)}
+  .issue .txt{font-size:13.5px;color:var(--dim)}
+  .issue .txt b{color:var(--warn);font-weight:600;font-family:'IBM Plex Mono',monospace;font-size:12px}
+
+  .principles{padding:46px 0}
+  .principles h2{font-family:'Space Grotesk',sans-serif;font-size:20px;color:var(--dim);
+    font-weight:500;margin-bottom:20px;letter-spacing:-.01em}
+  .law{border-left:2px solid var(--signal);padding:4px 0 4px 18px;margin-bottom:16px}
+  .law p{font-size:14.5px;color:var(--ink)}
+  .law p span{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="switch">
+    <a href="index.html" class="active">able<span>Lion</span></a>
+    <a href="ablebudget.html">able<span>Budget</span></a>
+    <a href="ablebody.html">able<span>Body</span></a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">HOME</a>
+    <a href="roadmap.html" class="active">ROADMAP</a>
+    <a href="mini-drone.html">MINI DRONE</a>
+    <a class="soon">LOG · SOON</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="page">
+    <div class="eyebrow">Live build log · roadmap v1</div>
+    <h1>Roadmap</h1>
+    <p class="mission">A public, multi-year record of designing flight technology from scratch: frames, firmware, and the sensing that ties them together. <b>The documentation is the asset.</b> A company is just what it looks like after ten years of this.</p>
+    <div class="vector">
+      <span>↳</span> learn in public
+      <span>↳</span> own the software stack
+      <span>↳</span> one line, many iterations
+    </div>
+  </header>
+
+  <section class="phase">
+    <div class="phase-head"><span class="tag now">NOW</span><h2>Mini Drone</h2></div>
+    <p class="phase-sub">The CICS 256 prototype, the bench that taught every lesson the line is built on. Built and ground-tested; not yet flown.</p>
+    <div class="grid">
+      <div class="card s">
+        <div class="card-k">Platform</div>
+        <h3>85mm brushed quad</h3>
+        <ul>
+          <li><b>ESP32-WROOM-32</b>, custom flight code</li>
+          <li><b>MPU-6050</b> IMU (gyro + accel)</li>
+          <li>4× <b>AEDIKO 8520</b> brushed motors</li>
+          <li><b>PS5</b> Bluetooth controller input</li>
+        </ul>
+        <div class="specs">
+          <span class="chip">3D-printed frame</span>
+          <span class="chip">1S</span>
+          <span class="chip">full SW control</span>
+        </div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Where it stands</div>
+        <h3>Grounded, and understood</h3>
+        <ul>
+          <li>Frame, wiring, and firmware all built</li>
+          <li>Flown on the bench with a custom dashboard</li>
+          <li>Two hardware limits traced and documented</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="phase-head"><span class="tag next">NEXT</span><h2>Sensing on the bench</h2></div>
+    <p class="phase-sub">Turn the makerspace sensor kit into real perception experiments (altitude, attitude, and presence) with the fusion code written and debugged off the aircraft.</p>
+    <div class="grid">
+      <div class="card b">
+        <div class="card-k">Direction</div>
+        <h3>The perception layer</h3>
+        <ul>
+          <li>Altitude, attitude, and presence on the bench</li>
+          <li>Sensor fusion in custom ESP32 code</li>
+          <li>Debugged off-aircraft, then carried into the next build</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="phase-head"><span class="tag horizon">HORIZON</span><h2>ableLion V1</h2></div>
+    <p class="phase-sub">The first solo aircraft in the line: go 2S brushless, keep the ESP32 and the custom flight code, and stay in full software control with a standalone ESC.</p>
+    <div class="grid">
+      <div class="card s">
+        <div class="card-k">Direction</div>
+        <h3>Brushless, still self-flown</h3>
+        <ul>
+          <li>2S brushless on a standalone ESC, not an all-in-one</li>
+          <li>ESP32 driving the ESC over DShot</li>
+          <li>Full PID retune for brushless</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="principles">
+    <h2>Operating principles, earned not assumed</h2>
+    <div class="law"><p>C-rating beats capacity on small high-draw builds. <span>A smaller high-C pack outflies a bigger low-C one when motors are current-starved.</span></p></div>
+    <div class="law"><p>MOSFET logic level is non-negotiable. <span>A 3.3V GPIO won't open a standard-level part, so use logic-level silicon for ESP32-driven motors.</span></p></div>
+    <div class="law"><p>1S brushless means AIO lock-in. <span>Anything small enough at 1S hides the ESC signal pads. 2S buys back software control.</span></p></div>
+    <div class="law"><p>Verify the connector before you buy. <span>Custom soldered builds don't always match "standard" parts.</span></p></div>
+  </section>
+
+  <footer><p>ableLion · MINI DRONE → V1 → ∞</p></footer>
+
+</div>
+</body>
+</html>

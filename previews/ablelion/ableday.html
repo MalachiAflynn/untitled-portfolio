@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ableDay · Local calendar + tasks hub</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  header.page{padding:54px 0 36px;border-bottom:1px solid var(--line)}
+  header.page h1{font-size:clamp(38px,7vw,72px)}
+  .lede{max-width:620px;margin-top:20px;color:var(--dim);font-size:16px;line-height:1.65}
+  .lede b{color:var(--ink);font-weight:500}
+  .status-line{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+    color:var(--signal);margin-top:22px;display:flex;align-items:center;gap:9px}
+  .status-line::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal);
+    box-shadow:0 0 10px var(--signal);animation:pulse 2.4s ease-in-out infinite}
+
+  .intro{padding:54px 0;border-bottom:1px solid var(--line)}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .intro h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:18px;font-weight:600}
+  .intro p{color:var(--dim);font-size:15.5px;line-height:1.7;margin-bottom:14px}
+  .intro p b{color:var(--ink);font-weight:500}
+  @media(max-width:720px){.intro-grid{grid-template-columns:1fr;gap:28px}}
+
+  .sec{padding:46px 0;border-bottom:1px solid var(--line)}
+  .sec h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:8px;font-weight:600}
+  .sec .sub{color:var(--dim);font-size:14px;margin-bottom:26px;max-width:620px;line-height:1.6}
+
+  .bom{width:100%;border-collapse:collapse;font-size:14px}
+  .bom td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .bom tr:last-child td{border-bottom:none}
+  .bom .role{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--dim);width:150px}
+  .bom .part{color:var(--ink);font-weight:500}
+  .bom .note{color:var(--dim);font-size:13px}
+
+  .roadmap-strip{padding:46px 0}
+  .roadmap-strip h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--dim);margin-bottom:22px;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="switch">
+    <a href="index.html">able<span>Lion</span></a>
+    <a href="ablebudget.html">able<span>Budget</span></a>
+    <a href="ablebody.html">able<span>Body</span></a>
+    <a href="ableday.html" class="active">able<span>Day</span></a>
+  </div>
+  <div class="nav-links">
+    <a href="ableday.html" class="active">OVERVIEW</a>
+    <a href="#inside">WHAT'S INSIDE</a>
+    <a href="#stack">STACK</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="page">
+    <div class="eyebrow">Project 04 · software · runs locally</div>
+    <h1>able<span class="l">Day</span></h1>
+    <p class="lede">A personal organization hub for my Mac that brings my <b>Google Calendar</b> and my daily <b>task list</b> into one local dashboard. It connects to the Google Calendar API (read &amp; write) and keeps my tasks in a local database, so the whole picture of my day lives in one place &mdash; and, like the rest of ableLion, it runs entirely on my machine.</p>
+    <div class="status-line">STATUS: BUILT &amp; RUNNING LOCALLY · GOOGLE CALENDAR + LOCAL TASKS</div>
+    <div class="launch">
+      <a class="launch-btn" href="http://localhost:5373">Open dashboard (local)</a>
+      <span class="launch-note">Requires the app running locally on this machine.</span>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="intro-grid">
+      <div>
+        <h2>What it is</h2>
+        <p>A single screen for the day: a <b>Today</b> view that puts my calendar agenda next to my task list, and a <b>Week</b> view that lays out the next seven days. Calendar events sync from Google; tasks are mine to add, check off, and prioritise.</p>
+        <p>The scope stays narrow on purpose: <b>single-user, no cloud, no login.</b> One person, one machine, one place to see what today actually looks like.</p>
+      </div>
+      <div>
+        <h2>Why build it</h2>
+        <p>I was living between Google Calendar and a separate to-do app and never seeing both at once. I wanted <b>one hub</b> that shows my real schedule and my tasks together &mdash; on my terms, in the ableLion style.</p>
+        <p>Same principle as the rest of the family: own the dashboard, keep the data and the OAuth tokens on the machine. Nothing about my day leaves it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="inside">
+    <h2>What's inside</h2>
+    <p class="sub">A tabbed dashboard backed by the Google Calendar API and a local task store. Calendar sync is on-demand and incremental; tasks are instant local writes.</p>
+    <div class="grid">
+      <div class="card s">
+        <div class="card-k">Tab · Today</div>
+        <h3>The day at a glance</h3>
+        <ul>
+          <li>Timed agenda from your calendar</li>
+          <li>Today's tasks right beside it</li>
+          <li>Add, check off, flag, delete inline</li>
+        </ul>
+        <div class="specs"><span class="chip">agenda + tasks</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Tab · Week</div>
+        <h3>The week ahead</h3>
+        <ul>
+          <li>Seven-day column grid</li>
+          <li>Events per day, today highlighted</li>
+          <li>Step forward and back by week</li>
+        </ul>
+        <div class="specs"><span class="chip">week grid</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Source · Calendar</div>
+        <h3>Google Calendar</h3>
+        <ul>
+          <li>OAuth 2.0 + PKCE, read &amp; write events</li>
+          <li>Incremental sync into a local cache</li>
+          <li>Tokens stay on the backend</li>
+        </ul>
+        <div class="specs"><span class="chip">calendar API</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Source · Tasks</div>
+        <h3>Local task store</h3>
+        <ul>
+          <li>Your tasks in local SQLite</li>
+          <li>Per-day, with priority &amp; done state</li>
+          <li>Fast, offline, fully yours</li>
+        </ul>
+        <div class="specs"><span class="chip">sqlite</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="stack">
+    <h2>The stack</h2>
+    <p class="sub">Deliberately the same shape as ableBody and ableBudget &mdash; swap the data source for the Google Calendar API and the privacy model carries straight over.</p>
+    <table class="bom">
+      <tr><td class="role">Backend</td><td class="part">Node + TypeScript, Express 5</td><td class="note">Binds to 127.0.0.1, CORS locked to the local frontend</td></tr>
+      <tr><td class="role">Calendar</td><td class="part">Google Calendar API</td><td class="note">Read &amp; write events; <code>calendar.readonly</code> + <code>calendar.events</code> scopes</td></tr>
+      <tr><td class="role">Auth</td><td class="part">Google OAuth 2.0</td><td class="note">Authorization Code + PKCE; tokens kept server-side</td></tr>
+      <tr><td class="role">Storage</td><td class="part">better-sqlite3</td><td class="note">One local SQLite file; cached events + your tasks</td></tr>
+      <tr><td class="role">Validation</td><td class="part">zod</td><td class="note">Env config validated on startup</td></tr>
+      <tr><td class="role">Frontend</td><td class="part">React 19 + Vite</td><td class="note">Today &amp; Week views; pinned to port 5373</td></tr>
+      <tr><td class="role">Theme</td><td class="part">Light instrument panel</td><td class="note">The white / blue / slate ableLion design system</td></tr>
+    </table>
+  </section>
+
+  <section class="roadmap-strip">
+    <h2>Where it goes</h2>
+    <div class="grid">
+      <div class="card b">
+        <div class="card-k">Next</div>
+        <h3>Sharper scheduling</h3>
+        <ul>
+          <li>Create events from the dashboard, drag to reschedule</li>
+          <li>Multiple calendars with colour filters</li>
+        </ul>
+      </div>
+      <div class="card soon-card">
+        <div class="card-k">Horizon</div>
+        <h3>One daily briefing</h3>
+        <ul>
+          <li>Optional Google Tasks two-way sync</li>
+          <li>A morning summary across calendar + tasks</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>ableDay · LOCAL · YOUR DAY STAYS YOURS</p></footer>
+
+</div>
+</body>
+</html>

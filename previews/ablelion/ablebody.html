@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ableBody · Local Google Health dashboard</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  header.page{padding:54px 0 36px;border-bottom:1px solid var(--line)}
+  header.page h1{font-size:clamp(38px,7vw,72px)}
+  .lede{max-width:620px;margin-top:20px;color:var(--dim);font-size:16px;line-height:1.65}
+  .lede b{color:var(--ink);font-weight:500}
+  .status-line{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+    color:var(--signal);margin-top:22px;display:flex;align-items:center;gap:9px}
+  .status-line::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal);
+    box-shadow:0 0 10px var(--signal);animation:pulse 2.4s ease-in-out infinite}
+
+  /* SCREENSHOT */
+  .shot-sec{padding:46px 0;border-bottom:1px solid var(--line)}
+  .shot-sec h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:8px;font-weight:600}
+  .shot-cap{color:var(--dim);font-size:14px;line-height:1.6;margin:0 0 18px;max-width:620px}
+  .shot-cap b{color:var(--ink);font-weight:500}
+  .shot{width:100%;border:1px solid var(--line);border-radius:12px;display:block;
+    box-shadow:0 12px 40px rgba(15,23,42,.10)}
+
+  .intro{padding:54px 0;border-bottom:1px solid var(--line)}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .intro h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:18px;font-weight:600}
+  .intro p{color:var(--dim);font-size:15.5px;line-height:1.7;margin-bottom:14px}
+  .intro p b{color:var(--ink);font-weight:500}
+  @media(max-width:720px){.intro-grid{grid-template-columns:1fr;gap:28px}}
+
+  .sec{padding:46px 0;border-bottom:1px solid var(--line)}
+  .sec h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:8px;font-weight:600}
+  .sec .sub{color:var(--dim);font-size:14px;margin-bottom:26px;max-width:620px;line-height:1.6}
+
+  /* DATA-FLOW DIAGRAM */
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-bottom:18px}
+  .node{flex:1;min-width:150px;background:linear-gradient(160deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:10px;padding:16px}
+  .node .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:7px}
+  .node h4{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:5px}
+  .node p{font-size:12.5px;color:var(--dim);line-height:1.5}
+  .arrow{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:42px;
+    font-family:'IBM Plex Mono',monospace;color:var(--dim);font-size:18px}
+  @media(max-width:720px){.flow{flex-direction:column}
+    .arrow{width:100%;height:26px;transform:rotate(90deg)}}
+  .flow-note{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--warn)}
+
+  /* STACK SHEET */
+  .bom{width:100%;border-collapse:collapse;font-size:14px}
+  .bom td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .bom tr:last-child td{border-bottom:none}
+  .bom .role{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--dim);width:150px}
+  .bom .part{color:var(--ink);font-weight:500}
+  .bom .note{color:var(--dim);font-size:13px}
+
+  /* PRINCIPLES */
+  .principles{padding:46px 0;border-bottom:1px solid var(--line)}
+  .principles h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:22px;font-weight:600}
+  .law{border-left:2px solid var(--signal);padding:4px 0 4px 18px;margin-bottom:16px}
+  .law p{font-size:14.5px;color:var(--ink)}
+  .law p span{color:var(--dim)}
+
+  .roadmap-strip{padding:46px 0}
+  .roadmap-strip h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--dim);margin-bottom:22px;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="switch">
+    <a href="index.html">able<span>Lion</span></a>
+    <a href="ablebudget.html">able<span>Budget</span></a>
+    <a href="ablebody.html" class="active">able<span>Body</span></a>
+    <a href="ableday.html">able<span>Day</span></a>
+  </div>
+  <div class="nav-links">
+    <a href="ablebody.html" class="active">OVERVIEW</a>
+    <a href="#dashboard">DASHBOARD</a>
+    <a href="#data">DATA FLOW</a>
+    <a href="#stack">STACK</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="page">
+    <div class="eyebrow">Project 03 · software · runs locally</div>
+    <h1>able<span class="l">Body</span></h1>
+    <p class="lede">A personal health dashboard for my Mac that pulls my own data off my <b>Fitbit Air</b> through the new <b>Google Health API</b> (read-only) and renders <b>every metric it can read</b> &mdash; heart, sleep, fitness, and body signals &mdash; on a local instrument panel. Like ableBudget, it runs entirely on my machine, so <b>the OAuth tokens and the health data never leave it.</b></p>
+    <div class="status-line">STATUS: LIVE &mdash; SYNCING REAL FITBIT AIR DATA OVER THE GOOGLE HEALTH API · AUTO-STARTS AT LOGIN</div>
+    <div class="launch">
+      <a class="launch-btn" href="http://localhost:5273">Open dashboard (local)</a>
+      <span class="launch-note">Requires the app running locally on this machine.</span>
+    </div>
+  </header>
+
+  <section class="shot-sec" id="dashboard">
+    <h2>The dashboard</h2>
+    <p class="shot-cap">The <b>Home</b> view: a bento board of every metric at a glance, each tile with its own sparkline &mdash; resting HR, HRV, SpO&#8322;, sleep, steps, active zone minutes, VO&#8322; max, weight, glucose and more. Detail tabs (<b>Heart, Fitness, Sleep, Body</b>) break each system out in full. Built in the same white / blue / slate instrument language as the rest of ableLion.</p>
+    <img class="shot" src="ablebody-dashboard.png" alt="ableBody dashboard — bento home view showing every health metric at a glance">
+  </section>
+
+  <section class="intro">
+    <div class="intro-grid">
+      <div>
+        <h2>What it is</h2>
+        <p>I have been wearing a <b>Fitbit Air</b> for about a month and it has made me more accountable about my health. The new <b>Google Health app</b> that shipped with it is good, but it is someone else's dashboard. I want my own: a local Mac app that reads my data over the official API and shows it the way I want to see it.</p>
+        <p>The scope stays narrow on purpose: <b>single-user, no login, no cloud, read-only.</b> It pulls a handful of data types into a local store and draws charts. It never writes anything back to my Google account.</p>
+      </div>
+      <div>
+        <h2>Why build it</h2>
+        <p>Same reason as ableBudget: I would rather own the dashboard than rent it. The Google Health app is closed and tied to a subscription (<b>Google Health Premium</b> for the coaching layer). The raw data is mine, and the API exists, so I can build exactly the view I want.</p>
+        <p>It is also good timing. Google is in the middle of <b>retiring the legacy Fitbit Web API in September 2026</b> and moving everyone to the new Google Health API, so anything built now should be built on the new platform from day one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="data">
+    <h2>How the data gets here</h2>
+    <p class="sub">The Fitbit Air has no public connection of its own &mdash; it syncs to Google's cloud, and the dashboard reads from there over the Google Health API. Authorization happens inside Google's own screen, and the tokens stay on my machine, exactly like the Plaid model in ableBudget.</p>
+
+    <div class="flow">
+      <div class="node">
+        <div class="k">Wrist &middot; sensor</div>
+        <h4>Fitbit Air</h4>
+        <p>Screenless tracker. Syncs heart rate, sleep, and activity up to Google Health over Bluetooth.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="node">
+        <div class="k">You &middot; in Google</div>
+        <h4>Google OAuth 2.0</h4>
+        <p>I authorize read-only scopes inside Google's own consent screen. My Google password never touches this app.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="node">
+        <div class="k">Backend only</div>
+        <h4>access + refresh token</h4>
+        <p>Exchanged server-side and stored locally. Never returned to the browser in any response.</p>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="node">
+        <div class="k">Local file</div>
+        <h4>your .db</h4>
+        <p>Caches the tokens and the synced data points. Gitignored, treated like a password.</p>
+      </div>
+    </div>
+    <p class="flow-note">The server binds to 127.0.0.1 only and reads from <code>health.googleapis.com/v4</code>; nothing is exposed on the network and nothing is written back to Google.</p>
+  </section>
+
+  <section class="sec">
+    <h2>What's inside</h2>
+    <p class="sub">A bento <b>Home</b> overview plus four detail tabs, together surfacing <b>every data type the Google Health API exposes</b> &mdash; backed by its read methods (<code>list</code>, <code>rollUp</code>, <code>dailyRollUp</code>). Sync is on-demand and incremental, paging through <code>nextPageToken</code> so re-running it never double-counts.</p>
+    <div class="grid">
+      <div class="card s">
+        <div class="card-k">Tab · Home</div>
+        <h3>Everything at a glance</h3>
+        <ul>
+          <li>Bento grid of ~20 live tiles</li>
+          <li>A sparkline under every stat</li>
+          <li>One screen, whole-body snapshot</li>
+        </ul>
+        <div class="specs"><span class="chip">bento</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Tab · Heart</div>
+        <h3>Cardiovascular</h3>
+        <ul>
+          <li>Intraday HR &amp; SpO&#8322;, resting HR, HRV</li>
+          <li>Respiratory rate, HR zones</li>
+          <li>Irregular-rhythm &amp; ECG status</li>
+        </ul>
+        <div class="specs"><span class="chip">vitals</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Tab · Fitness</div>
+        <h3>Activity &amp; workouts</h3>
+        <ul>
+          <li>Detected workouts log</li>
+          <li>Steps, distance, floors, calories</li>
+          <li>Active zone minutes, VO&#8322; max</li>
+        </ul>
+        <div class="specs"><span class="chip">recharts</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Tab · Sleep</div>
+        <h3>Sleep &amp; recovery</h3>
+        <ul>
+          <li>Duration trend &amp; stage breakdown</li>
+          <li>Skin-temperature variation</li>
+          <li>Overnight respiratory rate</li>
+        </ul>
+        <div class="specs"><span class="chip">stages</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Tab · Body</div>
+        <h3>Measurements &amp; logs</h3>
+        <ul>
+          <li>Weight &amp; body-fat trends</li>
+          <li>Hydration, nutrition, glucose</li>
+          <li>Honest flags for manual-entry data</li>
+        </ul>
+        <div class="specs"><span class="chip">read-only</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="stack">
+    <h2>The stack</h2>
+    <p class="sub">Deliberately the same shape as ableBudget &mdash; swap Plaid for the Google Health API and the privacy model carries straight over.</p>
+    <table class="bom">
+      <tr><td class="role">Backend</td><td class="part">Node + TypeScript, Express 5</td><td class="note">Binds to 127.0.0.1, CORS locked to the local frontend</td></tr>
+      <tr><td class="role">Health data</td><td class="part">Google Health API</td><td class="note">Read-only REST at <code>health.googleapis.com/v4</code>; successor to the Fitbit Web API</td></tr>
+      <tr><td class="role">Auth</td><td class="part">Google OAuth 2.0</td><td class="note">Authorization Code + PKCE; restricted health scopes</td></tr>
+      <tr><td class="role">Storage</td><td class="part">better-sqlite3</td><td class="note">One local SQLite file; holds the refresh token + cached data points</td></tr>
+      <tr><td class="role">Validation</td><td class="part">zod</td><td class="note">Env config and API payloads validated on startup &amp; at the edge</td></tr>
+      <tr><td class="role">Frontend</td><td class="part">React 19 + Vite</td><td class="note">Tabbed dashboard with shared chart &amp; tile components</td></tr>
+      <tr><td class="role">Charts</td><td class="part">recharts</td><td class="note">Area, bar, and sparkline trends across every metric</td></tr>
+      <tr><td class="role">Theme</td><td class="part">Light instrument panel</td><td class="note">The white / blue / slate ableLion design system</td></tr>
+    </table>
+  </section>
+
+  <section class="principles">
+    <h2>What the research settled</h2>
+    <div class="law"><p>Build on the Google Health API, not the old Fitbit one. <span>The legacy Fitbit Web API is being turned down in September 2026. The Fitbit Air and the new Google Health app are on the modern <code>health.googleapis.com/v4</code> platform with Google OAuth 2.0, so that is where this starts.</span></p></div>
+    <div class="law"><p>The cloud API is the only Mac-friendly door. <span>Android's on-device Health Connect store does not exist on macOS, so a Mac dashboard has to go through the cloud REST API. That is fine &mdash; it is read-only and works from any platform.</span></p></div>
+    <div class="law"><p>Tokens stay on the backend. <span>The browser only kicks off the OAuth redirect; the access and refresh tokens are exchanged server-side and stored in the local database, never sent back in a response.</span></p></div>
+    <div class="law"><p>Mind the testing-mode token expiry. <span>OAuth clients in &ldquo;Testing&rdquo; status expire their refresh token after 7 days. For a one-person app that means publishing the consent screen (or re-authorizing weekly) so the dashboard keeps syncing on its own.</span></p></div>
+    <div class="law"><p>Respect the rate limits. <span>The API returns <code>429</code> when you exceed daily/per-minute quotas, so sync backs off and retries rather than hammering. A local cache means most views read from SQLite, not the network.</span></p></div>
+  </section>
+
+  <section class="roadmap-strip">
+    <h2>Where it goes</h2>
+    <div class="grid">
+      <div class="card b">
+        <div class="card-k">Done</div>
+        <h3>Live data connected</h3>
+        <ul>
+          <li>OAuth to Google Health, real reads across ~35 data types (a million+ points and counting)</li>
+          <li>Backend, dashboard, and a 3-hourly auto-sync all run as launch agents &mdash; the button above just works</li>
+        </ul>
+      </div>
+      <div class="card soon-card">
+        <div class="card-k">Horizon</div>
+        <h3>Native menu-bar app</h3>
+        <ul>
+          <li>A SwiftUI menu-bar version so today's stats live in the macOS bar</li>
+          <li>Optional local correlations: sleep vs. resting HR, activity vs. recovery</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>ableBody · LOCAL · READ-ONLY · YOUR DATA STAYS YOURS</p></footer>
+
+</div>
+</body>
+</html>

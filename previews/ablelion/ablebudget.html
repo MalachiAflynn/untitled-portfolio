@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ableBudget · Local Plaid budgeting</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  header.page{padding:54px 0 36px;border-bottom:1px solid var(--line)}
+  header.page h1{font-size:clamp(38px,7vw,72px)}
+  .lede{max-width:620px;margin-top:20px;color:var(--dim);font-size:16px;line-height:1.65}
+  .lede b{color:var(--ink);font-weight:500}
+  .status-line{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;
+    color:var(--signal);margin-top:22px;display:flex;align-items:center;gap:9px}
+  .status-line::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal);
+    box-shadow:0 0 10px var(--signal);animation:pulse 2.4s ease-in-out infinite}
+
+  .intro{padding:54px 0;border-bottom:1px solid var(--line)}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .intro h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:18px;font-weight:600}
+  .intro p{color:var(--dim);font-size:15.5px;line-height:1.7;margin-bottom:14px}
+  .intro p b{color:var(--ink);font-weight:500}
+  @media(max-width:720px){.intro-grid{grid-template-columns:1fr;gap:28px}}
+
+  .sec{padding:46px 0;border-bottom:1px solid var(--line)}
+  .sec h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:8px;font-weight:600}
+  .sec .sub{color:var(--dim);font-size:14px;margin-bottom:26px;max-width:620px;line-height:1.6}
+
+  /* DATA-FLOW DIAGRAM */
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-bottom:18px}
+  .node{flex:1;min-width:150px;background:linear-gradient(160deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:10px;padding:16px}
+  .node .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:7px}
+  .node h4{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:5px}
+  .node p{font-size:12.5px;color:var(--dim);line-height:1.5}
+  .arrow{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:42px;
+    font-family:'IBM Plex Mono',monospace;color:var(--dim);font-size:18px}
+  @media(max-width:720px){.flow{flex-direction:column}
+    .arrow{width:100%;height:26px;transform:rotate(90deg)}}
+  .flow-note{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--warn);
+    display:flex;align-items:center;gap:9px}
+  .flow-note::before{content:"🔒";font-size:13px}
+
+  /* STACK SHEET */
+  .bom{width:100%;border-collapse:collapse;font-size:14px}
+  .bom td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .bom tr:last-child td{border-bottom:none}
+  .bom .role{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--dim);width:150px}
+  .bom .part{color:var(--ink);font-weight:500}
+  .bom .note{color:var(--dim);font-size:13px}
+
+  /* PRINCIPLES */
+  .principles{padding:46px 0;border-bottom:1px solid var(--line)}
+  .principles h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:22px;font-weight:600}
+  .law{border-left:2px solid var(--signal);padding:4px 0 4px 18px;margin-bottom:16px}
+  .law p{font-size:14.5px;color:var(--ink)}
+  .law p span{color:var(--dim)}
+
+  .roadmap-strip{padding:46px 0}
+  .roadmap-strip h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--dim);margin-bottom:22px;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="switch">
+    <a href="index.html">able<span>Lion</span></a>
+    <a href="ablebudget.html" class="active">able<span>Budget</span></a>
+    <a href="ablebody.html">able<span>Body</span></a>
+    <a href="ableday.html">able<span>Day</span></a>
+  </div>
+  <div class="nav-links">
+    <a href="ablebudget.html" class="active">OVERVIEW</a>
+    <a href="#privacy">PRIVACY</a>
+    <a href="#stack">STACK</a>
+    <a class="soon">LIVE DEMO · SOON</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <header class="page">
+    <div class="eyebrow">Project 02 · software · runs locally</div>
+    <h1>able<span class="l">Budget</span></h1>
+    <p class="lede">A personal budgeting dashboard that connects to my <b>real bank accounts through Plaid</b> (read-only) and pulls balances and categorized transactions into a local database to track budget vs. actual. It runs entirely on my machine, so <b>the access token and the data never leave it.</b></p>
+    <div class="status-line">STATUS: BUILT &amp; RUNNING LOCALLY · LIVE BANK DATA OVER PLAID</div>
+    <div class="launch">
+      <a class="launch-btn" href="http://localhost:5173">Open dashboard (local)</a>
+      <span class="launch-note">Requires the app running locally on this machine.</span>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="intro-grid">
+      <div>
+        <h2>What it is</h2>
+        <p>Link a bank, pull balances and categorized transactions into a local <b>SQLite</b> database, set monthly budgets per category, and watch budget vs. actual update. A month stepper in the nav drives every page: dashboard, transactions, and budgets.</p>
+        <p>The scope stays narrow on purpose: <b>single-user, no login, no cloud, no money movement.</b> It only uses Plaid's <code>transactions</code> product, and only to read.</p>
+      </div>
+      <div>
+        <h2>Why build it</h2>
+        <p>Most budgeting apps want your bank login on their servers and your spending history in their cloud. I wanted the reverse: <b>my data on my own machine, under my control.</b></p>
+        <p>It is also the first software project I have built that handles money, so most of the care went into the <b>privacy and trust model</b> rather than the charts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="privacy">
+    <h2>How it stays private</h2>
+    <p class="sub">This touches real financial data, so the trust model came first. The approach is straightforward: secrets stay on the backend, and the backend stays on localhost.</p>
+
+    <div class="flow">
+      <div class="node">
+        <div class="k">You · in Plaid</div>
+        <h4>Plaid Link</h4>
+        <p>You authenticate inside Plaid's own UI. Your bank credentials never touch this app.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="k">Short-lived</div>
+        <h4>public_token</h4>
+        <p>The only thing the browser ever receives back. Useless on its own.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="k">Backend only</div>
+        <h4>access_token</h4>
+        <p>Exchanged server-side, stored in SQLite, and never returned to the browser in any response.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="k">Local file</div>
+        <h4>your .db</h4>
+        <p>Holds the live token and your real transactions. Gitignored, treated like a password.</p>
+      </div>
+    </div>
+    <p class="flow-note">The server binds to 127.0.0.1 only, so it is never exposed on the network, and CORS is locked to the local frontend origin.</p>
+  </section>
+
+  <section class="sec">
+    <h2>What's inside</h2>
+    <p class="sub">Three pages, all driven by the month stepper in the nav. Sync is on-demand and incremental, using Plaid's cursor-based <code>/transactions/sync</code>, so re-running it never creates duplicates.</p>
+    <div class="grid">
+      <div class="card s">
+        <div class="card-k">Page · Dashboard</div>
+        <h3>Balances at a glance</h3>
+        <ul>
+          <li>Balances across linked accounts</li>
+          <li>This-month spend and income</li>
+          <li>Recent activity + budget snapshot</li>
+        </ul>
+        <div class="specs"><span class="chip">at-a-glance</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Page · Transactions</div>
+        <h3>The ledger</h3>
+        <ul>
+          <li>Search and filter every transaction</li>
+          <li>Re-categorize by clicking a category tag</li>
+          <li>Export to CSV</li>
+        </ul>
+        <div class="specs"><span class="chip">overrides survive re-sync</span></div>
+      </div>
+      <div class="card s">
+        <div class="card-k">Page · Budgets</div>
+        <h3>Budget vs. actual</h3>
+        <ul>
+          <li>Set monthly limits per category</li>
+          <li>Budget-vs-actual progress bars</li>
+          <li>Spend-by-category &amp; over-time charts</li>
+        </ul>
+        <div class="specs"><span class="chip">recharts</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="stack">
+    <h2>The stack</h2>
+    <table class="bom">
+      <tr><td class="role">Backend</td><td class="part">Node + TypeScript, Express 5</td><td class="note">Binds to 127.0.0.1, CORS locked to the local frontend</td></tr>
+      <tr><td class="role">Bank data</td><td class="part">Plaid · transactions</td><td class="note">Read-only, cursor-based <code>/transactions/sync</code> (not the legacy get)</td></tr>
+      <tr><td class="role">Storage</td><td class="part">better-sqlite3</td><td class="note">One local SQLite file; holds the access token + transactions</td></tr>
+      <tr><td class="role">Validation</td><td class="part">zod</td><td class="note">Env config and API payloads validated on startup &amp; at the edge</td></tr>
+      <tr><td class="role">Frontend</td><td class="part">React 19 + Vite</td><td class="note">react-router-dom, react-plaid-link for the Link flow</td></tr>
+      <tr><td class="role">Charts</td><td class="part">recharts</td><td class="note">Spend-by-category and spend-over-time</td></tr>
+      <tr><td class="role">Theme</td><td class="part">Dark instrument panel</td><td class="note">A dark adaptation of this ableLion design system</td></tr>
+    </table>
+  </section>
+
+  <section class="principles">
+    <h2>What it taught</h2>
+    <div class="law"><p>The access token stays on the backend. <span>It lives only on the server and in the local database, and is never sent back in an API response. The browser only ever handles the throwaway public_token.</span></p></div>
+    <div class="law"><p>Watch the sign on every amount. <span>In Plaid a positive amount means money <i>leaving</i> the account. Every budget calculation depends on getting that one rule right.</span></p></div>
+    <div class="law"><p>A manual edit should outlast the next sync. <span>Re-categorizing a transaction writes a category override that a later sync will not overwrite.</span></p></div>
+    <div class="law"><p>A local app has no webhook. <span>With no public URL there is nothing for Plaid to call back, so on-demand cursor-based "Sync now" handles updates instead.</span></p></div>
+  </section>
+
+  <section class="roadmap-strip">
+    <h2>Where it goes</h2>
+    <div class="grid">
+      <div class="card b">
+        <div class="card-k">Next</div>
+        <h3>Sharper budgeting</h3>
+        <ul>
+          <li>Rollover and per-category trends across months</li>
+          <li>Recurring-spend detection from the sync stream</li>
+        </ul>
+      </div>
+      <div class="card soon-card">
+        <div class="card-k">Horizon</div>
+        <h3>Optional hosted mode</h3>
+        <ul>
+          <li>A real public URL would unlock Plaid webhooks</li>
+          <li>Only if it can keep the same single-user privacy guarantees</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>ableBudget · LOCAL · READ-ONLY · YOUR DATA STAYS YOURS</p></footer>
+
+</div>
+</body>
+</html>

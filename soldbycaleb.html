@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLDBYCALEB — untitled</title>
+<link rel="stylesheet" href="style.css?v=7">
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <a href="index.html" class="brand">un<span class="l">titled</span></a>
+  <div class="nav-links">
+    <a href="index.html">Work</a>
+    <a href="soldbycaleb.html" class="active">Soldbycaleb</a>
+    <a href="ablelion.html">Ablelion</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <section class="case-hero">
+    <p class="label ox">Case study · I</p>
+    <h1><span>SOLD</span><span class="l">BYCALEB</span></h1>
+    <p class="case-lede">An archive clothing dealer with <b>700+ sales through Instagram DMs</b> and no storefront. The brief: a shop that still looks like his page.</p>
+    <div class="meta">
+      <div><dt>Role</dt><dd>Design &amp; build</dd></div>
+      <div><dt>Platform</dt><dd>Shopify (Dawn base)</dd></div>
+      <div><dt>Scope</dt><dd>Custom theme layer</dd></div>
+      <div><dt>Status</dt><dd>Ready to launch</dd></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="label">Live preview</p>
+    <h2 class="sec">The homepage, running</h2>
+    <p class="sec-sub">Scroll it, hover the cards, use the filter tabs.</p>
+
+    <div class="preview">
+      <div class="preview__bar">
+        <div class="preview__dots"><i></i><i></i><i></i></div>
+        <div class="preview__url">soldbycaleb.myshopify.com</div>
+        <div class="preview__live">✦ Live</div>
+      </div>
+      <iframe src="previews/sbc/index.html" title="SOLDBYCALEB homepage"></iframe>
+    </div>
+    <p class="preview__note"><a href="previews/sbc/index.html" target="_blank" rel="noopener">Open in a new tab</a></p>
+  </section>
+
+  <section class="block">
+    <div class="two">
+      <div>
+        <p class="label ox">The problem</p>
+        <h2 class="sec">A theme kills the credibility</h2>
+        <p>Every piece is <b>one-of-one</b> — it exists once, sells once, never comes back. His Instagram worked because it read like a dealer's feed: fit pics, receipts, a wall of sold items. A stock storefront hides sold stock, and then he looks like a dropshipper.</p>
+      </div>
+      <div>
+        <p class="label ox">The approach</p>
+        <h2 class="sec">An archive index, not a shop</h2>
+        <p>Pieces are numbered stock entries. Sold ones stay up, stamped, as proof of volume.</p>
+        <p>Early-90s terminal meets fashion editorial: green on black, monospace, hard corners, no shadows. The product photos are the only colour.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="label">Details</p>
+    <h2 class="sec">What got built</h2>
+    <p class="sec-sub">A custom layer over Shopify's Dawn — new Liquid sections, plus one stylesheet that re-voices the theme through its tokens.</p>
+    <div class="grid-cards">
+      <div class="card">
+        <div class="card-k">Homepage</div>
+        <h3>Pinned fading hero</h3>
+        <ul>
+          <li>Fit pic fixed behind the page</li>
+          <li>Fades and desaturates on scroll</li>
+          <li>Scroll-driven CSS, <b>no JavaScript</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-k">Product cards</div>
+        <h3>Catalog windows</h3>
+        <ul>
+          <li>Title bar with <b>[001]</b> stock number</li>
+          <li>Double frame, staggered, slightly crooked</li>
+          <li><b>[SOLD]</b> badge that never dims the photo</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-k">Sections</div>
+        <h3>Custom Liquid</h3>
+        <ul>
+          <li>Archive grid with working category tabs</li>
+          <li>Lookbook strip</li>
+          <li>Contact rail and footer block</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-k">Chrome</div>
+        <h3>Terminal furniture</h3>
+        <ul>
+          <li>Two-row header, blinking cursor wordmark</li>
+          <li>Phosphor ticker</li>
+          <li>Crop marks and vertical spec rails</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-k">Type</div>
+        <h3>Self-hosted face</h3>
+        <ul>
+          <li>One <b>.woff2</b> on the theme CDN</li>
+          <li>No external requests, no layout shift</li>
+          <li>System monospace for everything else</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-k">Done properly</div>
+        <h3>The unglamorous part</h3>
+        <ul>
+          <li>Muted grey lifted to clear <b>4.5:1</b></li>
+          <li>Respects <code>prefers-reduced-motion</code></li>
+          <li>Handoff doc so he can run it himself</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="label">Design notes</p>
+    <h2 class="sec">Two colours and one accent</h2>
+    <p>Four values, named semantically — <b>ink</b> is always the text, <b>paper</b> always the field — so it inverts to a light colourway by swapping two numbers.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#0B0B0B"></i><span>#0B0B0B<br>paper</span></div>
+      <div class="sw"><i style="background:#F0EEE6"></i><span>#F0EEE6<br>ink</span></div>
+      <div class="sw"><i style="background:#8F8F8F"></i><span>#8F8F8F<br>muted</span></div>
+      <div class="sw"><i style="background:#2BFF00"></i><span>#2BFF00<br>acid</span></div>
+    </div>
+    <p style="margin-top:24px">The green is rationed: cursor, ticker, hovers, selection, active tab. It never sits under body copy — at that lightness it can't carry text.</p>
+  </section>
+
+  <section class="contact">
+    <h2>Next: <em>ableLion</em></h2>
+    <p>Same hands, opposite voice.</p>
+    <div class="cta">
+      <a href="ablelion.html" class="btn p">ableLion case study</a>
+      <a href="index.html" class="btn">Back to work</a>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mark">untitled</span>
+    <p>Portfolio · MMXXVI</p>
+  </footer>
+
+</div>
+</body>
+</html>

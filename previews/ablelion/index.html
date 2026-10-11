@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ableLion</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero{padding:90px 0 56px;text-align:center;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{justify-content:center}
+  .hero h1{font-size:clamp(56px,13vw,128px)}
+  .tagline{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--dim);margin-top:18px}
+  .mission{max-width:600px;margin:34px auto 0;color:var(--dim);font-size:17px;line-height:1.6}
+  .mission b{color:var(--ink);font-weight:500}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+  .btn{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;
+    padding:12px 22px;border-radius:7px;border:1px solid var(--line);transition:.18s}
+  .btn.p{background:var(--signal);color:var(--void);border-color:var(--signal);font-weight:600}
+  .btn.p:hover{box-shadow:0 0 22px rgba(59,130,246,.35)}
+  .btn:hover{border-color:var(--signal);color:var(--ink)}
+
+  .intro{padding:54px 0;border-bottom:1px solid var(--line)}
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .intro h2{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--signal);margin-bottom:18px;font-weight:600}
+  .intro p{color:var(--dim);font-size:15.5px;line-height:1.7;margin-bottom:14px}
+  .intro p b{color:var(--ink);font-weight:500}
+  @media(max-width:720px){.intro-grid{grid-template-columns:1fr;gap:28px}}
+
+  .status{padding:54px 0}
+  .status h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;
+    margin-bottom:6px;letter-spacing:-.01em}
+  .status-sub{color:var(--dim);font-size:14px;margin-bottom:26px}
+  .feed a.card{display:block;transition:.18s}
+  .feed a.card:hover{border-color:var(--signal);transform:translateY(-2px)}
+  .feed .card-k .stamp{color:var(--signal)}
+  .soon-card{opacity:.5}
+  .soon-card .card-k{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="switch">
+    <a href="index.html" class="active">able<span>Lion</span></a>
+    <a href="ablebudget.html">able<span>Budget</span></a>
+    <a href="ablebody.html">able<span>Body</span></a>
+    <a href="ableday.html">able<span>Day</span></a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="active">HOME</a>
+    <a href="roadmap.html">ROADMAP</a>
+    <a href="mini-drone.html">MINI DRONE</a>
+    <a class="soon">LOG · SOON</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Building in public</div>
+    <h1><span class="a">able</span><span class="l">Lion</span></h1>
+    <p class="tagline">flight technology, from scratch</p>
+    <p class="mission">A public record of designing aircraft and the software that flies them. Frames, firmware, and sensing, documented as they get built. <b>The documentation is the asset.</b> A company is just what this looks like after ten years.</p>
+    <div class="cta">
+      <a href="roadmap.html" class="btn p">See the roadmap</a>
+      <a href="mini-drone.html" class="btn">Current build</a>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="intro-grid">
+      <div>
+        <h2>What this is</h2>
+        <p>ableLion is one continuous line of homemade drones, each one a little more capable than the last, all running flight code written from the ground up on an <b>ESP32</b> instead of off-the-shelf firmware.</p>
+        <p>The point is not to ship a product. The point is to <b>learn out loud</b>, keep every lesson and every failure on the record, and let the work compound over years.</p>
+      </div>
+      <div>
+        <h2>Why public</h2>
+        <p>Sell one thing and it is a company. Until then it is a build log, and a build log is the most honest version of a portfolio: it shows the process, not just the polished result.</p>
+        <p>Everything here is written as it happens. The blocked builds, the wrong parts, the fixes that finally worked. <b>That trail is the whole point.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="status">
+    <h2>Where things stand</h2>
+    <p class="status-sub">Latest first. More entries land as the work does.</p>
+    <div class="grid feed">
+
+      <a href="mini-drone.html" class="card s">
+        <div class="card-k"><span class="stamp">● ACTIVE</span> · MINI DRONE</div>
+        <h3>85mm brushed quad</h3>
+        <ul>
+          <li>ESP32 flight controller, custom code</li>
+          <li>Custom ground-station dashboard, built &amp; tested</li>
+          <li>CICS 256 group project</li>
+        </ul>
+        <div class="specs">
+          <span class="chip">in progress</span>
+          <span class="chip">read the build →</span>
+        </div>
+      </a>
+
+      <a href="roadmap.html" class="card b">
+        <div class="card-k">PLANNED · ableLion V1</div>
+        <h3>First solo brushless build</h3>
+        <ul>
+          <li>2S brushless, standalone ESC</li>
+          <li>Stay in full software control</li>
+          <li>DShot out from the ESP32</li>
+        </ul>
+        <div class="specs">
+          <span class="chip">on the horizon</span>
+          <span class="chip">see roadmap →</span>
+        </div>
+      </a>
+
+      <div class="card soon-card">
+        <div class="card-k">SOON · SENSING</div>
+        <h3>Perception experiments</h3>
+        <ul>
+          <li>Makerspace sensor kit to drone tech</li>
+          <li>Altitude, attitude, presence</li>
+          <li>Sensor fusion on the bench</li>
+        </ul>
+        <div class="specs"><span class="chip">coming soon</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer><p>ableLion · MINI DRONE → V1 → ∞</p></footer>
+
+</div>
+</body>
+</html>
